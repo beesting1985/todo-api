@@ -40,12 +40,26 @@ app.post('/todos', function (req, res) {
 	body.id = todoNextID++;
 
 	todos.push(body);
-
-
-
 //	console.log('description: ' + body.description);
 	res.json(body);
 });
+
+//DELETE
+app.delete('/todos/:id', function (req, res) {
+	var todoid = parseInt(req.params.id, 10);
+	var matchedTodo = _.findWhere(todos, {id: todoid});
+
+
+	if (!matchedTodo) {
+		res.status(404).json({"error": "NO itenm found"});
+
+	} else {
+		todos = _.without(todos, matchedTodo);
+		res.json(matchedTodo);
+	}
+
+})
+
 
 app.listen(PORT, function () {
 	console.log('express listening on port ' + PORT +'!');

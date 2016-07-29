@@ -10,28 +10,36 @@ var userNextID = 1;
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-	res.send('Todo api root');
+	res.send('User api root');
 });
 
 app.get('/users', function (req, res) {
 	res.json(users);
 })
 
-app.get('/users/:id', function (req, res) {
-	var userid = parseInt(req.params.id, 10);
-	var matchedUser = _.findWhere(users, {id: userid});
+app.post('/users/find', function (req, res) {
+	var userMobile = req.body.mobil;
+	var matchedUser = _.findWhere(users, {mobil: userMobile});
+	// var mobile = _.pick
+	console.log(matchedUser);
+	// var matchedUser = null;
 	
 	if (matchedUser) {
 		res.json(matchedUser);
+		// res.send('false');
 
 	} else {
-		res.status(404).send();
+		
+		//send OTP
+		//Store Mobile & OTP
+		res.json({mobil: null});
+
 	}
 }); 
 
 //POST 
 app.post('/users', function (req, res) {
-	var body = _.pick(req.body, 'mobile', 'gender');
+	var body = _.pick(req.body, 'mobil', 'gender');
 	// if (!_.isEmpty(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
 	// 	return res.status(400).send();
 	// }

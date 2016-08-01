@@ -1,13 +1,16 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var _ = require('underscore');	
+var _ = require('underscore');
+var logger = require('morgan');	
 
 var PORT = process.env.PORT || 3000;
 var users = [];
 var userNextID = 1;
 
+app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
 	res.send('User api root');
@@ -19,9 +22,10 @@ app.get('/users', function (req, res) {
 
 app.post('/users/find', function (req, res) {
 	var userMobile = req.body.mobil;
+
 	var matchedUser = _.findWhere(users, {mobil: userMobile});
 	// var mobile = _.pick
-	console.log(matchedUser);
+	console.log('request find');
 	// var matchedUser = null;
 	
 	if (matchedUser) {
@@ -39,6 +43,7 @@ app.post('/users/find', function (req, res) {
 
 //POST 
 app.post('/users', function (req, res) {
+	
 	var body = _.pick(req.body, 'mobil', 'gender');
 	// if (!_.isEmpty(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
 	// 	return res.status(400).send();

@@ -19,7 +19,7 @@ app.get('/users', function (req, res) {
 app.get('/users/:mobile', function (req, res) {
 	var todomobile = parseInt(req.params.mobile, 10);
 	var matcheduser = _.findWhere(users, {mobil: todomobile});
-	res.json(matcheduser);
+	res.send(matcheduser);
 });
 
 app.post('/users/find', function (req, res) {

@@ -12,8 +12,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', function (req, res) {
-	res.send('User api root');
+app.get('/users', function (req, res) {
+	res.send(users);
 });
 
 app.get('/users/:mobile', function (req, res) {

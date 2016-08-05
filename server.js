@@ -16,9 +16,11 @@ app.get('/', function (req, res) {
 	res.send('User api root');
 });
 
-app.get('/users', function (req, res) {
-	res.json(users);
-})
+app.get('/users/:mobile', function (req, res) {
+	var todomobile = ParseInt(req.params.mobile, 10);
+	var matcheduser = _.findWhere(users, {mobil: todomobile});
+	res.json(matcheduser);
+});
 
 app.post('/users/find', function (req, res) {
 	var userMobile = req.body.mobil;

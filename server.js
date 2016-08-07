@@ -18,8 +18,12 @@ app.get('/users', function (req, res) {
 
 app.get('/users/:mobile', function (req, res) {
 	var todomobile = parseInt(req.params.mobile, 10);
-	var matcheduser = _.findWhere(users, {mobil: todomobile});
-	res.send(matcheduser);
+	var matcheduser = _.findWhere(users, {mobile: todomobile});
+	if (!matcheduser) {
+	res.json({mobile: null});
+	} else {
+	res.json({mobile: matcheduser.mobile});	
+	}
 });
 
 app.post('/users/find', function (req, res) {
@@ -46,7 +50,7 @@ app.post('/users/find', function (req, res) {
 //POST 
 app.post('/users', function (req, res) {
 	
-	var body = _.pick(req.body, 'mobil', 'gender');
+	var body = _.pick(req.body, 'mobile', 'gender');
 	// if (!_.isEmpty(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
 	// 	return res.status(400).send();
 	// }

@@ -20,9 +20,9 @@ app.get('/users/:mobile', function (req, res) {
 	var todomobile = parseInt(req.params.mobile, 10);
 	var matcheduser = _.findWhere(users, {mobile: todomobile});
 	if (!matcheduser) {
-	res.send(false);
+	res.send(0); //0: false
 	} else {
-	res.send(true);	
+	res.send(1);	
 	}
 });
 
